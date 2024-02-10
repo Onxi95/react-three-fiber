@@ -40,11 +40,17 @@ export const Experience = () => {
 
   const { camera, gl } = useThree();
 
-  useFrame((state, delta) => {
+  useFrame(({ clock, camera }, delta) => {
     knotRef.current!.rotation.y += delta;
     groupRef.current!.rotation.y += delta * 0.5;
     groupRef.current!.rotation.x += delta * 0.5;
     groupRef.current!.rotation.z += delta * 0.5;
+
+    const angle = clock.elapsedTime;
+
+    camera.position.x = Math.sin(angle) * 8;
+    camera.position.z = Math.cos(angle) * 8;
+    camera.lookAt(0, 0, 0);
   });
 
   return (
