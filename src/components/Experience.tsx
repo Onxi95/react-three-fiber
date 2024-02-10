@@ -1,5 +1,11 @@
-import { useFrame } from "@react-three/fiber";
+import {
+  useFrame,
+  extend,
+  useThree,
+  type ReactThreeFiber,
+} from "@react-three/fiber";
 import { useRef } from "react";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import type {
   BufferGeometry,
   Group,
@@ -8,6 +14,20 @@ import type {
   NormalBufferAttributes,
   Object3DEventMap,
 } from "three";
+
+extend({ OrbitControls });
+
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace JSX {
+    interface IntrinsicElements {
+      orbitControls: ReactThreeFiber.Object3DNode<
+        OrbitControls,
+        typeof OrbitControls
+      >;
+    }
+  }
+}
 
 export const Experience = () => {
   const knotRef = useRef<Mesh<
@@ -18,6 +38,8 @@ export const Experience = () => {
 
   const groupRef = useRef<Group<Object3DEventMap> | null>(null);
 
+  const { camera, gl } = useThree();
+
   useFrame((state, delta) => {
     knotRef.current!.rotation.y += delta;
     groupRef.current!.rotation.y += delta * 0.5;
@@ -27,6 +49,7 @@ export const Experience = () => {
 
   return (
     <>
+      <orbitControls args={[camera, gl.domElement]} />
       <group ref={groupRef}>
         <mesh position-x={-2}>
           <sphereGeometry />
