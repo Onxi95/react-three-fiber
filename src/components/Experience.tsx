@@ -50,19 +50,21 @@ export const Experience = () => {
   return (
     <>
       <orbitControls args={[camera, gl.domElement]} />
+      <directionalLight position={[1, 2, 3]} intensity={4} />
+      <ambientLight intensity={1} />
       <group ref={groupRef}>
         <mesh position-x={-2}>
           <sphereGeometry />
-          <meshBasicMaterial color="blue" />
+          <meshStandardMaterial color="yellow" />
         </mesh>
         <mesh position-x={2} position-y={1} ref={knotRef}>
-          <torusKnotGeometry />
-          <meshNormalMaterial />
+          <torusGeometry />
+          <meshStandardMaterial />
         </mesh>
       </group>
       <mesh position-y={-4} rotation-x={-Math.PI * 0.5} scale={10}>
         <planeGeometry />
-        <meshBasicMaterial color="greenyellow" />
+        <meshStandardMaterial color="greenyellow" />
       </mesh>
     </>
   );
