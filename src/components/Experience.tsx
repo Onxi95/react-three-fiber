@@ -46,6 +46,7 @@ export const Experience = () => {
         </mesh>
         <TransformControls
           object={sphereMeshRef as React.MutableRefObject<SphereMesh>}
+          mode="scale"
         />
         <mesh position-x={2} position-y={1} ref={knotRef}>
           <torusGeometry />
