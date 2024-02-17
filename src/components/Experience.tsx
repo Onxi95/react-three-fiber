@@ -3,6 +3,7 @@ import {
   OrbitControls,
   PivotControls,
   TransformControls,
+  Text,
 } from "@react-three/drei";
 // import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
@@ -79,6 +80,7 @@ export const Experience = () => {
         <planeGeometry />
         <meshStandardMaterial color="greenyellow" />
       </mesh>
+      <Text fontSize={0.3}>Let's gooo</Text>
     </>
   );
 };
