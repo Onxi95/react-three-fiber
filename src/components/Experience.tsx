@@ -1,4 +1,8 @@
-import { OrbitControls, TransformControls } from "@react-three/drei";
+import {
+  OrbitControls,
+  PivotControls,
+  TransformControls,
+} from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import type {
@@ -48,10 +52,12 @@ export const Experience = () => {
           object={sphereMeshRef as React.MutableRefObject<SphereMesh>}
           mode="scale"
         />
-        <mesh position-x={2} position-y={1} ref={knotRef}>
-          <torusGeometry />
-          <meshStandardMaterial />
-        </mesh>
+        <PivotControls anchor={[0, 0, 0]} depthTest={false}>
+          <mesh position-x={2} position-y={1} ref={knotRef}>
+            <torusGeometry />
+            <meshStandardMaterial />
+          </mesh>
+        </PivotControls>
       </group>
       <mesh position-y={-4} rotation-x={-Math.PI * 0.5} scale={10}>
         <planeGeometry />
