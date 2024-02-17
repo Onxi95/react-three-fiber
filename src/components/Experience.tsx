@@ -1,9 +1,10 @@
 import {
+  Html,
   OrbitControls,
   PivotControls,
   TransformControls,
 } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
+// import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import type {
   BufferGeometry,
@@ -47,10 +48,25 @@ export const Experience = () => {
         <mesh position-x={-2} ref={sphereMeshRef}>
           <sphereGeometry />
           <meshStandardMaterial color="yellow" />
+          <Html
+            style={{
+              backgroundColor: "rgba(0,0,0,0.8)",
+              padding: 16,
+              borderRadius: 32,
+              pointerEvents: "none",
+              textWrap: "nowrap",
+            }}
+            position={[0, 1.25, 0]}
+            center
+            distanceFactor={8}
+            occlude={[sphereMeshRef, knotRef]}
+          >
+            Hello, this is a label
+          </Html>
         </mesh>
         <TransformControls
           object={sphereMeshRef as React.MutableRefObject<SphereMesh>}
-          mode="scale"
+          mode="translate"
         />
         <PivotControls anchor={[0, 0, 0]} depthTest={false}>
           <mesh position-x={2} position-y={1} ref={knotRef}>
