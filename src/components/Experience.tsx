@@ -5,6 +5,7 @@ import {
   TransformControls,
   Text,
   Float,
+  MeshReflectorMaterial,
 } from "@react-three/drei";
 // import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
@@ -46,6 +47,7 @@ export const Experience = () => {
       <OrbitControls makeDefault />
       <directionalLight position={[1, 2, 3]} intensity={4} />
       <ambientLight intensity={1} />
+      <directionalLight position={[1, 2, 3]} intensity={1.5} />
       <group ref={groupRef}>
         <mesh position-x={-2} ref={sphereMeshRef}>
           <sphereGeometry />
@@ -77,9 +79,15 @@ export const Experience = () => {
           </mesh>
         </PivotControls>
       </group>
-      <mesh position-y={-4} rotation-x={-Math.PI * 0.5} scale={10}>
+      <mesh position-y={-2} rotation-x={-Math.PI * 0.5} scale={10}>
         <planeGeometry />
-        <meshStandardMaterial color="greenyellow" />
+        {/* <meshStandardMaterial color="greenyellow" /> */}
+        <MeshReflectorMaterial
+          mirror={0.5}
+          resolution={1024}
+          blur={[1000, 1000]}
+          mixBlur={1}
+        />
       </mesh>
       <Float speed={10}>
         <Text fontSize={0.3} color="darkblue">
