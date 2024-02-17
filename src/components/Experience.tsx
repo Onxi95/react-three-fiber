@@ -4,6 +4,7 @@ import {
   PivotControls,
   TransformControls,
   Text,
+  Float,
 } from "@react-three/drei";
 // import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
@@ -80,7 +81,11 @@ export const Experience = () => {
         <planeGeometry />
         <meshStandardMaterial color="greenyellow" />
       </mesh>
-      <Text fontSize={0.3}>Let's gooo</Text>
+      <Float speed={10}>
+        <Text fontSize={0.3} color="darkblue">
+          Let's gooo
+        </Text>
+      </Float>
     </>
   );
 };
