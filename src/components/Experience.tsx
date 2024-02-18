@@ -17,6 +17,7 @@ import type {
   NormalBufferAttributes,
   Object3DEventMap,
 } from "three";
+import { useControls } from "leva";
 
 type SphereMesh = Mesh<
   BufferGeometry<NormalBufferAttributes>,
@@ -42,9 +43,19 @@ export const Experience = () => {
   // groupRef.current!.rotation.z += delta * 0.5;
   // });
 
+  const { position } = useControls({
+    position: 2,
+  });
+
   return (
     <>
-      <OrbitControls makeDefault />
+      <OrbitControls
+        makeDefault
+        enableZoom={false}
+        enablePan={false}
+        // minPolarAngle={Math.PI / 2}
+        maxPolarAngle={Math.PI / 2}
+      />
       <directionalLight position={[1, 2, 3]} intensity={4} />
       <ambientLight intensity={1} />
       <directionalLight position={[1, 2, 3]} intensity={1.5} />
@@ -73,7 +84,7 @@ export const Experience = () => {
           mode="translate"
         />
         <PivotControls anchor={[0, 0, 0]} depthTest={false}>
-          <mesh position-x={2} position-y={1} ref={knotRef}>
+          <mesh position-x={position} position-y={1} ref={knotRef}>
             <torusGeometry />
             <meshStandardMaterial />
           </mesh>
