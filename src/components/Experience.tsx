@@ -5,7 +5,7 @@ import {
   TransformControls,
   Text,
   Float,
-  MeshReflectorMaterial,
+  // MeshReflectorMaterial,
 } from "@react-three/drei";
 // import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
@@ -51,16 +51,20 @@ export const Experience = () => {
     <>
       <OrbitControls
         makeDefault
-        enableZoom={false}
-        enablePan={false}
+        // enableZoom={false}
+        // enablePan={false}
         // minPolarAngle={Math.PI / 2}
         maxPolarAngle={Math.PI / 2}
       />
-      <directionalLight position={[1, 2, 3]} intensity={4} />
+      <directionalLight
+        position={[1, 2, 3]}
+        intensity={4}
+        castShadow
+        shadow-mapSize={2048}
+      />
       <ambientLight intensity={1} />
-      <directionalLight position={[1, 2, 3]} intensity={1.5} />
       <group ref={groupRef}>
-        <mesh position-x={-2} ref={sphereMeshRef}>
+        <mesh position-x={-2} ref={sphereMeshRef} castShadow>
           <sphereGeometry />
           <meshStandardMaterial color="yellow" />
           <Html
@@ -84,21 +88,27 @@ export const Experience = () => {
           mode="translate"
         />
         <PivotControls anchor={[0, 0, 0]} depthTest={false}>
-          <mesh position-x={position} position-y={1} ref={knotRef}>
+          <mesh position-x={position} position-y={1} ref={knotRef} castShadow>
             <torusGeometry />
             <meshStandardMaterial />
           </mesh>
         </PivotControls>
       </group>
-      <mesh position-y={-2} rotation-x={-Math.PI * 0.5} scale={10}>
-        <planeGeometry />
+      <mesh
+        position-y={-7}
+        rotation-x={-Math.PI * 0.5}
+        scale={10}
+        receiveShadow
+      >
+        <boxGeometry args={[10, 10, 1]} />
         {/* <meshStandardMaterial color="greenyellow" /> */}
-        <MeshReflectorMaterial
+        {/* <MeshReflectorMaterial
           mirror={0.5}
           resolution={1024}
           blur={[1000, 1000]}
           mixBlur={1}
-        />
+        /> */}
+        <meshStandardMaterial color="greenyellow" />
       </mesh>
       <Float speed={10}>
         <Text fontSize={0.3} color="darkblue">

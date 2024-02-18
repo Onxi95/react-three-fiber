@@ -5,7 +5,7 @@ import { Perf } from "r3f-perf";
 
 function App() {
   return (
-    <Canvas>
+    <Canvas shadows>
       <Perf position="top-left" />
       <Experience />
     </Canvas>
