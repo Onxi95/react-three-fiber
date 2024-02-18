@@ -1,15 +1,20 @@
 import "./App.css";
-import { Canvas } from "@react-three/fiber";
-import { Experience } from "./components/Experience";
-import { Perf } from "r3f-perf";
+import { RouterProvider, createRouter } from "@tanstack/react-router";
+
+import { routeTree } from "./routeTree.gen";
+
+// Create a new router instance
+const router = createRouter({ routeTree });
+
+// Register the router instance for type safety
+declare module "@tanstack/react-router" {
+  interface Register {
+    router: typeof router;
+  }
+}
 
 function App() {
-  return (
-    <Canvas shadows>
-      <Perf position="top-left" />
-      <Experience />
-    </Canvas>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
