@@ -1,5 +1,9 @@
-import { Environment } from "@react-three/drei";
+import { Environment, OrbitControls } from "@react-three/drei";
 
 export const PhysicsExperience = () => {
-  return <Environment background preset="sunset"></Environment>;
+  return (
+    <Environment background preset="sunset">
+      <OrbitControls makeDefault />
+    </Environment>
+  );
 };
