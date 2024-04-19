@@ -1,5 +1,5 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
-import { Experience } from "../components/Experience";
+import { PhysicsExperience } from "../components/PhysicsExperience";
 
 export const Route = createLazyFileRoute("/physics")({
   component: Physics,
@@ -8,7 +8,7 @@ export const Route = createLazyFileRoute("/physics")({
 function Physics() {
   return (
     <>
-      <Experience />
+      <PhysicsExperience />
     </>
   );
 }
