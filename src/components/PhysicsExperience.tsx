@@ -18,6 +18,12 @@ export const PhysicsExperience = () => {
       <ambientLight intensity={0.5} />
       <Physics debug>
         <RigidBody>
+          <mesh castShadow receiveShadow position={[0, 5, 0]}>
+            <torusGeometry args={[1, 0.5, 16, 32]} />
+            <meshStandardMaterial color="lightblue" />
+          </mesh>
+        </RigidBody>
+        <RigidBody colliders="ball">
           <mesh castShadow position={[-2, 2, 0]}>
             <sphereGeometry />
             <meshStandardMaterial color="orange" />
