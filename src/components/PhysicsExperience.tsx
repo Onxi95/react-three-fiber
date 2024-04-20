@@ -7,7 +7,22 @@ export const PhysicsExperience = () => {
 
   const onTorusClick = () => {
     if (torusRef.current) {
-      torusRef.current.applyImpulse({ x: 0, y: 15, z: 0 }, true);
+      torusRef.current.applyImpulse(
+        {
+          x: -5,
+          y: 10,
+          z: 2,
+        },
+        true,
+      );
+      torusRef.current.applyTorqueImpulse(
+        {
+          x: -Math.random() - 0.5,
+          y: Math.random() - 0.5,
+          z: Math.random() - 0.5,
+        },
+        true,
+      );
     }
   };
 
@@ -27,14 +42,15 @@ export const PhysicsExperience = () => {
       <ambientLight intensity={0.5} />
       <Physics debug>
         <RigidBody
+          gravityScale={0.1}
           colliders="trimesh"
           position={[-1, 5, 0]}
           rotation={[Math.PI * 0.5, 0, 0]}
           ref={torusRef}
         >
-          <mesh castShadow receiveShadow onClick={onTorusClick}>
+          <mesh castShadow onClick={onTorusClick}>
             <torusGeometry args={[1, 0.5, 16, 32]} />
-            <meshNormalMaterial />
+            <meshStandardMaterial color="turquoise" />
           </mesh>
         </RigidBody>
         <RigidBody colliders="ball">
@@ -53,9 +69,9 @@ export const PhysicsExperience = () => {
             <meshStandardMaterial color="green" />
           </mesh>
         </RigidBody>
-        <RigidBody type="fixed">
+        <RigidBody type="fixed" restitution={1}>
           <mesh receiveShadow position-y={-0.5}>
-            <boxGeometry args={[15, 0.5, 15]} />
+            <boxGeometry args={[100, 0.5, 100]} />
             <meshStandardMaterial color="greenyellow" />
           </mesh>
         </RigidBody>
