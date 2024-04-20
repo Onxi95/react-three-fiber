@@ -4,6 +4,10 @@ import { Physics, RigidBody, RapierRigidBody } from "@react-three/rapier";
 import { useRef } from "react";
 import * as THREE from "three";
 
+const hitSound = new Audio(
+  "https://cdn.pixabay.com/audio/2022/03/21/audio_39bb9ae400.mp3",
+);
+
 export const PhysicsExperience = () => {
   const torusRef = useRef<RapierRigidBody>(null);
   const twisterRef = useRef<RapierRigidBody>(null);
@@ -15,6 +19,12 @@ export const PhysicsExperience = () => {
       const quaternionRotation = new THREE.Quaternion().setFromEuler(
         eulerRotation,
       );
+
+      const angle = time * 0.5;
+      const x = Math.cos(angle) * 3;
+      const z = Math.sin(angle) * 3;
+
+      twisterRef.current.setNextKinematicTranslation({ x, y: 0.1, z });
       twisterRef.current.setNextKinematicRotation(quaternionRotation);
     }
   });
@@ -38,6 +48,12 @@ export const PhysicsExperience = () => {
         true,
       );
     }
+  };
+
+  const onHit = () => {
+    hitSound.currentTime = 0;
+    hitSound.volume = Math.random() * 0.5 + 0.5;
+    hitSound.play();
   };
 
   return (
@@ -85,6 +101,7 @@ export const PhysicsExperience = () => {
           position={[0, 0.1, 0]}
           type="kinematicPosition"
           ref={twisterRef}
+          onCollisionEnter={onHit}
         >
           <mesh castShadow>
             <boxGeometry args={[4, 0.5, 0.5]} />
