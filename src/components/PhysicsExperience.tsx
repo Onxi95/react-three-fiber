@@ -46,6 +46,8 @@ export const PhysicsExperience = () => {
           colliders="trimesh"
           position={[-1, 5, 0]}
           rotation={[Math.PI * 0.5, 0, 0]}
+          friction={0}
+          restitution={2}
           ref={torusRef}
         >
           <mesh castShadow onClick={onTorusClick}>
