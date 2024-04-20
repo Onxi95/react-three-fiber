@@ -1,6 +1,11 @@
 import { OrbitControls } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { Physics, RigidBody, RapierRigidBody } from "@react-three/rapier";
+import {
+  Physics,
+  RigidBody,
+  RapierRigidBody,
+  CuboidCollider,
+} from "@react-three/rapier";
 import { useRef } from "react";
 import * as THREE from "three";
 
@@ -71,11 +76,12 @@ export const PhysicsExperience = () => {
       />
       <ambientLight intensity={0.5} />
       <Physics debug>
-        <RigidBody type="fixed" restitution={1}>
-          <mesh receiveShadow position-y={20.5}>
-            <boxGeometry args={[100, 0.5, 100]} />
-            <meshStandardMaterial color="greenyellow" />
-          </mesh>
+        <RigidBody type="fixed" restitution={1} position={[0, 10, 0]}>
+          <CuboidCollider args={[10, 0.5, 10]} />
+          <CuboidCollider args={[0.5, 5, 5]} position={[-5.5, -5, 0]} />
+          <CuboidCollider args={[0.5, 5, 5]} position={[5.5, -5, 0]} />
+          <CuboidCollider args={[5, 5, 0.5]} position={[0, -5, -5.5]} />
+          <CuboidCollider args={[5, 5, 0.5]} position={[0, -5, 5.5]} />
         </RigidBody>
         <RigidBody
           gravityScale={0.1}
@@ -120,7 +126,7 @@ export const PhysicsExperience = () => {
         </RigidBody>
         <RigidBody type="fixed" restitution={1}>
           <mesh receiveShadow position-y={-0.5}>
-            <boxGeometry args={[100, 0.5, 100]} />
+            <boxGeometry args={[10, 0.5, 10]} />
             <meshStandardMaterial color="greenyellow" />
           </mesh>
         </RigidBody>
