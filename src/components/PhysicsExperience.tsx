@@ -4,7 +4,11 @@ import { Physics, RigidBody } from "@react-three/rapier";
 export const PhysicsExperience = () => {
   return (
     <>
-      <OrbitControls makeDefault />
+      <OrbitControls
+        makeDefault
+        minPolarAngle={0}
+        maxPolarAngle={Math.PI / 2}
+      />
       <directionalLight
         castShadow
         position={[1, 2, 3]}
