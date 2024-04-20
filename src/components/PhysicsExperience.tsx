@@ -41,6 +41,12 @@ export const PhysicsExperience = () => {
       />
       <ambientLight intensity={0.5} />
       <Physics debug>
+        <RigidBody type="fixed" restitution={1}>
+          <mesh receiveShadow position-y={20.5}>
+            <boxGeometry args={[100, 0.5, 100]} />
+            <meshStandardMaterial color="greenyellow" />
+          </mesh>
+        </RigidBody>
         <RigidBody
           gravityScale={0.1}
           colliders="trimesh"
