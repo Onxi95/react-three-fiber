@@ -16,7 +16,7 @@ export const PhysicsExperience = () => {
         shadow-mapSize={2048}
       />
       <ambientLight intensity={0.5} />
-      <Physics>
+      <Physics debug>
         <RigidBody>
           <mesh castShadow position={[-2, 2, 0]}>
             <sphereGeometry />
@@ -24,6 +24,10 @@ export const PhysicsExperience = () => {
           </mesh>
         </RigidBody>
         <RigidBody>
+          <mesh castShadow receiveShadow position={[2, 4, 0]}>
+            <boxGeometry args={[3, 2, 0.5]} />
+            <meshStandardMaterial color="green" />
+          </mesh>
           <mesh castShadow receiveShadow position={[2, 2, 0]}>
             <boxGeometry />
             <meshStandardMaterial color="green" />
