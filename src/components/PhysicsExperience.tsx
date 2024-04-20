@@ -1,7 +1,16 @@
 import { OrbitControls } from "@react-three/drei";
-import { Physics, RigidBody } from "@react-three/rapier";
+import { Physics, RigidBody, RapierRigidBody } from "@react-three/rapier";
+import { useRef } from "react";
 
 export const PhysicsExperience = () => {
+  const torusRef = useRef<RapierRigidBody>(null);
+
+  const onTorusClick = () => {
+    if (torusRef.current) {
+      torusRef.current.applyImpulse({ x: 0, y: 15, z: 0 }, true);
+    }
+  };
+
   return (
     <>
       <OrbitControls
@@ -17,15 +26,15 @@ export const PhysicsExperience = () => {
       />
       <ambientLight intensity={0.5} />
       <Physics debug>
-        <RigidBody colliders="trimesh">
-          <mesh
-            castShadow
-            receiveShadow
-            position={[-1, 5, 0]}
-            rotation={[Math.PI * 0.5, 0, 0]}
-          >
+        <RigidBody
+          colliders="trimesh"
+          position={[-1, 5, 0]}
+          rotation={[Math.PI * 0.5, 0, 0]}
+          ref={torusRef}
+        >
+          <mesh castShadow receiveShadow onClick={onTorusClick}>
             <torusGeometry args={[1, 0.5, 16, 32]} />
-            <meshStandardMaterial color="lightblue" />
+            <meshNormalMaterial />
           </mesh>
         </RigidBody>
         <RigidBody colliders="ball">
