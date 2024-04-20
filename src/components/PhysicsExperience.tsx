@@ -1,9 +1,23 @@
 import { OrbitControls } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
 import { Physics, RigidBody, RapierRigidBody } from "@react-three/rapier";
 import { useRef } from "react";
+import * as THREE from "three";
 
 export const PhysicsExperience = () => {
   const torusRef = useRef<RapierRigidBody>(null);
+  const twisterRef = useRef<RapierRigidBody>(null);
+
+  useFrame(({ clock }) => {
+    if (twisterRef.current) {
+      const time = clock.getElapsedTime();
+      const eulerRotation = new THREE.Euler(0, time * 3, 0);
+      const quaternionRotation = new THREE.Quaternion().setFromEuler(
+        eulerRotation,
+      );
+      twisterRef.current.setNextKinematicRotation(quaternionRotation);
+    }
+  });
 
   const onTorusClick = () => {
     if (torusRef.current) {
@@ -65,6 +79,16 @@ export const PhysicsExperience = () => {
           <mesh castShadow position={[-2, 2, 0]}>
             <sphereGeometry />
             <meshStandardMaterial color="orange" />
+          </mesh>
+        </RigidBody>
+        <RigidBody
+          position={[0, 0.1, 0]}
+          type="kinematicPosition"
+          ref={twisterRef}
+        >
+          <mesh castShadow>
+            <boxGeometry args={[4, 0.5, 0.5]} />
+            <meshStandardMaterial color="red" />
           </mesh>
         </RigidBody>
         <RigidBody>
