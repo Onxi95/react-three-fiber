@@ -10,7 +10,7 @@ import { useRef } from "react";
 import * as THREE from "three";
 
 const hitSound = new Audio(
-  "https://cdn.pixabay.com/audio/2022/03/21/audio_39bb9ae400.mp3",
+  "https://cdn.pixabay.com/audio/2022/03/21/audio_39bb9ae400.mp3"
 );
 
 export const PhysicsExperience = () => {
@@ -20,12 +20,12 @@ export const PhysicsExperience = () => {
   useFrame(({ clock }) => {
     if (twisterRef.current) {
       const time = clock.getElapsedTime();
-      const eulerRotation = new THREE.Euler(0, time * 3, 0);
+      const eulerRotation = new THREE.Euler(0, time * 5, 0);
       const quaternionRotation = new THREE.Quaternion().setFromEuler(
-        eulerRotation,
+        eulerRotation
       );
 
-      const angle = time * 0.5;
+      const angle = time * 1.5;
       const x = Math.cos(angle) * 3;
       const z = Math.sin(angle) * 3;
 
@@ -42,7 +42,7 @@ export const PhysicsExperience = () => {
           y: 10,
           z: 2,
         },
-        true,
+        true
       );
       torusRef.current.applyTorqueImpulse(
         {
@@ -50,7 +50,7 @@ export const PhysicsExperience = () => {
           y: Math.random() - 0.5,
           z: Math.random() - 0.5,
         },
-        true,
+        true
       );
     }
   };
