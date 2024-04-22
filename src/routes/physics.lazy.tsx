@@ -6,9 +6,5 @@ export const Route = createLazyFileRoute("/physics")({
 });
 
 function Physics() {
-  return (
-    <>
-      <PhysicsExperience />
-    </>
-  );
+  return <PhysicsExperience />;
 }
