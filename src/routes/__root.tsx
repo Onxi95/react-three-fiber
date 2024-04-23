@@ -14,6 +14,7 @@ export const Route = createRootRoute({
       <div className="absolute bottom-0 w-full flex justify-center gap-5 mb-2">
         <Link to="/">Basic example</Link>
         <Link to="/physics">Physics</Link>
+        <Link to="/stress-test">Stress Test</Link>
       </div>
       <TanStackRouterDevtools />
     </>
