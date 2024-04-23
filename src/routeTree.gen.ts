@@ -16,10 +16,16 @@ import { Route as rootRoute } from './routes/__root'
 
 // Create Virtual Routes
 
+const StressTestLazyImport = createFileRoute('/stress-test')()
 const PhysicsLazyImport = createFileRoute('/physics')()
 const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
+
+const StressTestLazyRoute = StressTestLazyImport.update({
+  path: '/stress-test',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/stress-test.lazy').then((d) => d.Route))
 
 const PhysicsLazyRoute = PhysicsLazyImport.update({
   path: '/physics',
@@ -43,6 +49,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PhysicsLazyImport
       parentRoute: typeof rootRoute
     }
+    '/stress-test': {
+      preLoaderRoute: typeof StressTestLazyImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -51,6 +61,7 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren([
   IndexLazyRoute,
   PhysicsLazyRoute,
+  StressTestLazyRoute,
 ])
 
 /* prettier-ignore-end */
