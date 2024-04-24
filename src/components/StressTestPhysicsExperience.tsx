@@ -93,10 +93,10 @@ export const StressTestPhysicsExperience = () => {
       <ambientLight intensity={0.5} />
       <Physics debug>
         <RigidBody type="fixed" restitution={1} position={[0, 10, 0]}>
-          <CuboidCollider args={[0.5, 6, 10]} position={[-10.5, -5, 0]} />
-          <CuboidCollider args={[0.5, 6, 10]} position={[10.5, -5, 0]} />
-          <CuboidCollider args={[10, 6, 0.5]} position={[0, -5, -10.5]} />
-          <CuboidCollider args={[10, 6, 0.5]} position={[0, -5, 10.5]} />
+          <CuboidCollider args={[0.5, 60, 10]} position={[-10.5, 0, 0]} />
+          <CuboidCollider args={[0.5, 60, 10]} position={[10.5, 0, 0]} />
+          <CuboidCollider args={[10, 60, 0.5]} position={[0, 0, -10.5]} />
+          <CuboidCollider args={[10, 60, 0.5]} position={[0, 0, 10.5]} />
         </RigidBody>
         <RigidBody
           position={[0, 0.1, 0]}
@@ -104,7 +104,7 @@ export const StressTestPhysicsExperience = () => {
           ref={twisterRef}
         >
           <mesh castShadow>
-            <boxGeometry args={[4, 0.5, 0.5]} />
+            <boxGeometry args={[15, 0.5, 0.5]} />
             <meshStandardMaterial color="red" />
           </mesh>
         </RigidBody>
