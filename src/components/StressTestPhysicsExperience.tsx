@@ -31,7 +31,7 @@ export const StressTestPhysicsExperience = () => {
       matrix.compose(
         new THREE.Vector3(i * 2, 0, 0),
         new THREE.Quaternion(),
-        new THREE.Vector3(1, 1, 1)
+        new THREE.Vector3(1, 1, 1),
       );
       cubesRef.current.setMatrixAt(i, matrix);
     }
@@ -65,7 +65,7 @@ export const StressTestPhysicsExperience = () => {
       const time = clock.getElapsedTime();
       const eulerRotation = new THREE.Euler(0, time * 5, 0);
       const quaternionRotation = new THREE.Quaternion().setFromEuler(
-        eulerRotation
+        eulerRotation,
       );
 
       const angle = time * 1.5;
@@ -93,10 +93,10 @@ export const StressTestPhysicsExperience = () => {
       <ambientLight intensity={0.5} />
       <Physics debug>
         <RigidBody type="fixed" restitution={1} position={[0, 10, 0]}>
-          <CuboidCollider args={[0.5, 5, 5]} position={[-5.5, -5, 0]} />
-          <CuboidCollider args={[0.5, 5, 5]} position={[5.5, -5, 0]} />
-          <CuboidCollider args={[5, 5, 0.5]} position={[0, -5, -5.5]} />
-          <CuboidCollider args={[5, 5, 0.5]} position={[0, -5, 5.5]} />
+          <CuboidCollider args={[0.5, 6, 10]} position={[-10.5, -5, 0]} />
+          <CuboidCollider args={[0.5, 6, 10]} position={[10.5, -5, 0]} />
+          <CuboidCollider args={[10, 6, 0.5]} position={[0, -5, -10.5]} />
+          <CuboidCollider args={[10, 6, 0.5]} position={[0, -5, 10.5]} />
         </RigidBody>
         <RigidBody
           position={[0, 0.1, 0]}
@@ -110,7 +110,7 @@ export const StressTestPhysicsExperience = () => {
         </RigidBody>
         <RigidBody type="fixed" restitution={1}>
           <mesh receiveShadow position-y={-0.5}>
-            <boxGeometry args={[10, 0.5, 10]} />
+            <boxGeometry args={[20, 0.5, 20]} />
             <meshStandardMaterial color="greenyellow" />
           </mesh>
         </RigidBody>
