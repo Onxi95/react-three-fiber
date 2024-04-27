@@ -1,4 +1,4 @@
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, Text } from "@react-three/drei";
 import {
   Physics,
   RigidBody,
@@ -6,12 +6,16 @@ import {
   InstancedRigidBodies,
   type Vector3Tuple,
 } from "@react-three/rapier";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 
 const cubesCount = 100;
 
+const defaultGravity: [number, number, number] = [0, -9.81, 0];
+
 export const GyroscopeExperience = () => {
+  const [gravity, setGravity] = useState(defaultGravity);
+
   const cubesRef =
     useRef<
       THREE.InstancedMesh<
@@ -33,6 +37,24 @@ export const GyroscopeExperience = () => {
       cubesRef.current.setMatrixAt(i, matrix);
     }
   }, []);
+
+  useEffect(() => {
+    if ("DeviceOrientationEvent" in window) {
+      window.addEventListener("deviceorientation", function (e) {
+        const alpha = e.alpha || 0;
+        const beta = e.beta || 0;
+        const gamma = e.gamma || 0;
+
+        console.log({ alpha, beta, gamma });
+
+        setGravity([0, -(beta / 10), 0]);
+      });
+    } else {
+      console.log("Device Orientation API not supported.");
+    }
+  });
+
+  console.log({ gravity });
 
   const instances = useMemo(() => {
     const instances = [];
@@ -59,6 +81,9 @@ export const GyroscopeExperience = () => {
 
   return (
     <>
+      <Text fontSize={0.3} color="darkblue">
+        {gravity.toString()}
+      </Text>
       <OrbitControls
         makeDefault
         minPolarAngle={0}
@@ -71,20 +96,30 @@ export const GyroscopeExperience = () => {
         shadow-mapSize={2048}
       />
       <ambientLight intensity={0.5} />
-      <Physics debug>
-        <RigidBody type="fixed" restitution={1} position={[0, 10, 0]}>
+      <Physics debug gravity={gravity}>
+        <RigidBody
+          type="fixed"
+          restitution={0}
+          position={[0, 10, 0]}
+          friction={0}
+        >
           <CuboidCollider args={[0.5, 60, 10]} position={[-10.5, 0, 0]} />
           <CuboidCollider args={[0.5, 60, 10]} position={[10.5, 0, 0]} />
           <CuboidCollider args={[10, 60, 0.5]} position={[0, 0, -10.5]} />
           <CuboidCollider args={[10, 60, 0.5]} position={[0, 0, 10.5]} />
         </RigidBody>
-        <RigidBody type="fixed" restitution={1}>
+        <RigidBody type="fixed" restitution={1} friction={0}>
           <mesh receiveShadow position-y={-0.5}>
             <boxGeometry args={[20, 0.5, 20]} />
             <meshStandardMaterial color="greenyellow" />
           </mesh>
         </RigidBody>
-        <InstancedRigidBodies instances={instances}>
+        <InstancedRigidBodies
+          instances={instances}
+          friction={0}
+          restitution={0}
+          canSleep={false}
+        >
           <instancedMesh
             ref={cubesRef}
             castShadow

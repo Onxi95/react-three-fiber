@@ -16,17 +16,12 @@ import { Route as rootRoute } from './routes/__root'
 
 // Create Virtual Routes
 
-const GyroscopeLazyImport = createFileRoute('/gyroscope')()
 const StressTestLazyImport = createFileRoute('/stress-test')()
 const PhysicsLazyImport = createFileRoute('/physics')()
+const GyroscopeLazyImport = createFileRoute('/gyroscope')()
 const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
-
-const GyroscopeLazyRoute = GyroscopeLazyImport.update({
-  path: '/gyroscope',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/gyroscope.lazy').then((d) => d.Route))
 
 const StressTestLazyRoute = StressTestLazyImport.update({
   path: '/stress-test',
@@ -37,6 +32,11 @@ const PhysicsLazyRoute = PhysicsLazyImport.update({
   path: '/physics',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/physics.lazy').then((d) => d.Route))
+
+const GyroscopeLazyRoute = GyroscopeLazyImport.update({
+  path: '/gyroscope',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/gyroscope.lazy').then((d) => d.Route))
 
 const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
@@ -51,16 +51,16 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
+    '/gyroscope': {
+      preLoaderRoute: typeof GyroscopeLazyImport
+      parentRoute: typeof rootRoute
+    }
     '/physics': {
       preLoaderRoute: typeof PhysicsLazyImport
       parentRoute: typeof rootRoute
     }
     '/stress-test': {
       preLoaderRoute: typeof StressTestLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/gyroscope': {
-      preLoaderRoute: typeof GyroscopeLazyImport
       parentRoute: typeof rootRoute
     }
   }
@@ -70,9 +70,9 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren([
   IndexLazyRoute,
+  GyroscopeLazyRoute,
   PhysicsLazyRoute,
   StressTestLazyRoute,
-  GyroscopeLazyRoute,
 ])
 
 /* prettier-ignore-end */
