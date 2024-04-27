@@ -10,6 +10,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 
 const cubesCount = 100;
+const gravityMultiplier = 9;
 
 const defaultGravity: [number, number, number] = [0, -9.81, 0];
 const radians = (deg: number) => (deg * Math.PI) / 180;
@@ -55,14 +56,16 @@ export const GyroscopeExperience = () => {
 
         console.log({ gx, gy, gz });
 
-        setGravity([gx, gy, gz]);
+        setGravity([
+          gx * gravityMultiplier,
+          gy * gravityMultiplier,
+          gz * gravityMultiplier,
+        ]);
       });
     } else {
       console.log("Device Orientation API not supported.");
     }
   });
-
-  console.log({ gravity });
 
   const instances = useMemo(() => {
     const instances = [];
