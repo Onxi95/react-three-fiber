@@ -9,7 +9,7 @@ import {
 import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 
-const cubesCount = 100;
+const cubesCount = 50;
 const gravityMultiplier = 9;
 
 const defaultGravity: [number, number, number] = [0, -9.81, 0];
