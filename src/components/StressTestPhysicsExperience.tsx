@@ -23,6 +23,7 @@ export const StressTestPhysicsExperience = () => {
         THREE.InstancedMeshEventMap
       >
     >(null);
+  const directionalLightHelper = useRef<THREE.DirectionalLight | null>(null);
 
   useEffect(() => {
     if (!cubesRef.current) return;
@@ -31,7 +32,7 @@ export const StressTestPhysicsExperience = () => {
       matrix.compose(
         new THREE.Vector3(i * 2, 0, 0),
         new THREE.Quaternion(),
-        new THREE.Vector3(1, 1, 1),
+        new THREE.Vector3(1, 1, 1)
       );
       cubesRef.current.setMatrixAt(i, matrix);
     }
@@ -65,7 +66,7 @@ export const StressTestPhysicsExperience = () => {
       const time = clock.getElapsedTime();
       const eulerRotation = new THREE.Euler(0, time * 5, 0);
       const quaternionRotation = new THREE.Quaternion().setFromEuler(
-        eulerRotation,
+        eulerRotation
       );
 
       const angle = time * 1.5;
@@ -86,9 +87,16 @@ export const StressTestPhysicsExperience = () => {
       />
       <directionalLight
         castShadow
-        position={[1, 2, 3]}
+        position={[0, 50, 0]}
         intensity={1.5}
         shadow-mapSize={2048}
+        shadow-camera-left={-10} // Adjust the left boundary of the shadow camera's frustum
+        shadow-camera-right={10} // Adjust the right boundary of the shadow camera's frustum
+        shadow-camera-top={10} // Adjust the top boundary of the shadow camera's frustum
+        shadow-camera-bottom={-10} // Adjust the bottom boundary of the shadow camera's frustum
+        shadow-camera-near={0.5} // Adjust the near clipping plane of the shadow camera
+        shadow-camera-far={100} // Adjust the far clipping plane of the shadow camera
+        ref={directionalLightHelper}
       />
       <ambientLight intensity={0.5} />
       <Physics debug>
