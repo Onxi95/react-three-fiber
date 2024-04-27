@@ -15,6 +15,7 @@ export const Route = createRootRoute({
         <Link to="/">Basic example</Link>
         <Link to="/physics">Physics</Link>
         <Link to="/stress-test">Stress Test</Link>
+        <Link to="/gyroscope">Gyroscope</Link>
       </div>
       <TanStackRouterDevtools />
     </>
