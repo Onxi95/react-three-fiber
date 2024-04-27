@@ -12,6 +12,7 @@ import * as THREE from "three";
 const cubesCount = 100;
 
 const defaultGravity: [number, number, number] = [0, -9.81, 0];
+const radians = (deg: number) => (deg * Math.PI) / 180;
 
 export const GyroscopeExperience = () => {
   const [gravity, setGravity] = useState(defaultGravity);
@@ -45,9 +46,16 @@ export const GyroscopeExperience = () => {
         const beta = e.beta || 0;
         const gamma = e.gamma || 0;
 
-        console.log({ alpha, beta, gamma });
+        const betaRad = radians(beta);
+        const gammaRad = radians(gamma);
 
-        setGravity([0, -(beta / 10), 0]);
+        const gx = Math.sin(gammaRad) * Math.cos(betaRad);
+        const gy = -Math.sin(betaRad);
+        const gz = Math.cos(gammaRad) * Math.cos(betaRad);
+
+        console.log({ gx, gy, gz });
+
+        setGravity([gx, gy, gz]);
       });
     } else {
       console.log("Device Orientation API not supported.");
