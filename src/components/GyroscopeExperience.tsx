@@ -43,7 +43,6 @@ export const GyroscopeExperience = () => {
   useEffect(() => {
     if ("DeviceOrientationEvent" in window) {
       window.addEventListener("deviceorientation", function (e) {
-        const alpha = e.alpha || 0;
         const beta = e.beta || 0;
         const gamma = e.gamma || 0;
 
