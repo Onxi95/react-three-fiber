@@ -6,7 +6,8 @@ import {
   InstancedRigidBodies,
   type Vector3Tuple,
 } from "@react-three/rapier";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { debounce } from "lodash-es";
 import * as THREE from "three";
 
 const cubesCount = 50;
@@ -40,27 +41,34 @@ export const GyroscopeExperience = () => {
     }
   }, []);
 
+  const handleDeviceOrientationChange = useCallback(
+    debounce((e: DeviceOrientationEvent) => {
+      console.log({ e, now: Date.now() });
+      const beta = e.beta || 0;
+      const gamma = e.gamma || 0;
+
+      const betaRad = radians(beta);
+      const gammaRad = radians(gamma);
+
+      const gx = Math.sin(gammaRad) * Math.cos(betaRad);
+      const gy = -Math.sin(betaRad);
+      const gz = Math.cos(gammaRad) * Math.cos(betaRad);
+
+      setGravity([
+        gx * gravityMultiplier,
+        gy * gravityMultiplier,
+        -gz * gravityMultiplier,
+      ]);
+    }, 20),
+    []
+  );
+
   useEffect(() => {
     if ("DeviceOrientationEvent" in window) {
-      window.addEventListener("deviceorientation", function (e) {
-        const beta = e.beta || 0;
-        const gamma = e.gamma || 0;
-
-        const betaRad = radians(beta);
-        const gammaRad = radians(gamma);
-
-        const gx = Math.sin(gammaRad) * Math.cos(betaRad);
-        const gy = -Math.sin(betaRad);
-        const gz = Math.cos(gammaRad) * Math.cos(betaRad);
-
-        console.log({ gx, gy, gz });
-
-        setGravity([
-          gx * gravityMultiplier,
-          gy * gravityMultiplier,
-          -gz * gravityMultiplier,
-        ]);
-      });
+      window.addEventListener(
+        "deviceorientation",
+        handleDeviceOrientationChange
+      );
     } else {
       console.log("Device Orientation API not supported.");
     }
