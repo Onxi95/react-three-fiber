@@ -58,7 +58,7 @@ export const GyroscopeExperience = () => {
         setGravity([
           gx * gravityMultiplier,
           gy * gravityMultiplier,
-          gz * gravityMultiplier,
+          -gz * gravityMultiplier,
         ]);
       });
     } else {
