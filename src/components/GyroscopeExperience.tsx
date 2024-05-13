@@ -35,7 +35,7 @@ export const GyroscopeExperience = () => {
       matrix.compose(
         new THREE.Vector3(i * 2, 0, 0),
         new THREE.Quaternion(),
-        new THREE.Vector3(1, 1, 1)
+        new THREE.Vector3(1, 1, 1),
       );
       cubesRef.current.setMatrixAt(i, matrix);
     }
@@ -60,14 +60,14 @@ export const GyroscopeExperience = () => {
         -gz * gravityMultiplier,
       ]);
     }, 20),
-    []
+    [],
   );
 
   useEffect(() => {
     if ("DeviceOrientationEvent" in window) {
       window.addEventListener(
         "deviceorientation",
-        handleDeviceOrientationChange
+        handleDeviceOrientationChange,
       );
     } else {
       console.log("Device Orientation API not supported.");
@@ -118,13 +118,13 @@ export const GyroscopeExperience = () => {
         <RigidBody
           type="fixed"
           restitution={0}
-          position={[0, 10, 0]}
+          position={[0, -0.5, 0]}
           friction={0}
         >
-          <CuboidCollider args={[0.5, 60, 10]} position={[-10.5, 0, 0]} />
-          <CuboidCollider args={[0.5, 60, 10]} position={[10.5, 0, 0]} />
-          <CuboidCollider args={[10, 60, 0.5]} position={[0, 0, -10.5]} />
-          <CuboidCollider args={[10, 60, 0.5]} position={[0, 0, 10.5]} />
+          <CuboidCollider args={[0.5, 30, 10]} position={[-10.5, 30, 0]} />
+          <CuboidCollider args={[0.5, 30, 10]} position={[10.5, 30, 0]} />
+          <CuboidCollider args={[10, 30, 0.5]} position={[0, 30, -10.5]} />
+          <CuboidCollider args={[10, 30, 0.5]} position={[0, 30, 10.5]} />
         </RigidBody>
         <RigidBody type="fixed" restitution={1} friction={0}>
           <mesh receiveShadow position-y={-0.5}>
