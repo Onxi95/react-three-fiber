@@ -125,6 +125,7 @@ export const GyroscopeExperience = () => {
           <CuboidCollider args={[0.5, 30, 10]} position={[10.5, 30, 0]} />
           <CuboidCollider args={[10, 30, 0.5]} position={[0, 30, -10.5]} />
           <CuboidCollider args={[10, 30, 0.5]} position={[0, 30, 10.5]} />
+          <CuboidCollider args={[10, 0.5, 10]} position={[0, 60, 0]} />
         </RigidBody>
         <RigidBody type="fixed" restitution={1} friction={0}>
           <mesh receiveShadow position-y={-0.5}>
