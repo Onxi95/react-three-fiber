@@ -11,7 +11,7 @@ import { debounce } from "lodash-es";
 import * as THREE from "three";
 
 const cubesCount = 50;
-const gravityMultiplier = 9;
+const gravityMultiplier = 90;
 
 const defaultGravity: [number, number, number] = [0, -9.81, 0];
 const radians = (deg: number) => (deg * Math.PI) / 180;
