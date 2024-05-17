@@ -10,7 +10,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { debounce } from "lodash-es";
 import * as THREE from "three";
 
-const cubesCount = 50;
 import { useControls } from "leva";
 
 const defaultGravity: [number, number, number] = [0, -9.81, 0];
@@ -18,8 +17,9 @@ const radians = (deg: number) => (deg * Math.PI) / 180;
 
 export const GyroscopeExperience = () => {
   const [gravity, setGravity] = useState(defaultGravity);
-  const { gravityMultiplier } = useControls({
+  const { gravityMultiplier, cubesCount } = useControls({
     gravityMultiplier: 9,
+    cubesCount: 50,
   });
 
   const cubesRef =
@@ -42,7 +42,7 @@ export const GyroscopeExperience = () => {
       );
       cubesRef.current.setMatrixAt(i, matrix);
     }
-  }, []);
+  }, [cubesCount]);
 
   const handleDeviceOrientationChange = useCallback(
     debounce((e: DeviceOrientationEvent) => {
@@ -87,7 +87,7 @@ export const GyroscopeExperience = () => {
 
     for (let i = 0; i < cubesCount; i++) {
       const instance = {
-        key: `instance_${i}`,
+        key: `instance_${Date()}-${i}`,
         position: [
           (Math.random() - 0.5) * 8,
           6 + i * 0.2,
@@ -103,7 +103,7 @@ export const GyroscopeExperience = () => {
     }
 
     return instances;
-  }, []);
+  }, [cubesCount]);
 
   return (
     <>
