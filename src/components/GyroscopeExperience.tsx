@@ -46,7 +46,6 @@ export const GyroscopeExperience = () => {
 
   const handleDeviceOrientationChange = useCallback(
     debounce((e: DeviceOrientationEvent) => {
-      console.log({ e, now: Date.now() });
       const beta = e.beta || 0;
       const gamma = e.gamma || 0;
 
