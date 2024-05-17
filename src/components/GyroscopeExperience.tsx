@@ -75,6 +75,12 @@ export const GyroscopeExperience = () => {
     } else {
       console.log("Device Orientation API not supported.");
     }
+
+    return () =>
+      window.removeEventListener(
+        "deviceorientation",
+        handleDeviceOrientationChange
+      );
   });
 
   const instances = useMemo(() => {
