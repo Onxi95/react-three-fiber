@@ -17,9 +17,10 @@ const radians = (deg: number) => (deg * Math.PI) / 180;
 
 export const GyroscopeExperience = () => {
   const [gravity, setGravity] = useState(defaultGravity);
-  const { gravityMultiplier, cubesCount } = useControls({
+  const { gravityMultiplier, cubesCount, debug } = useControls({
     gravityMultiplier: 9,
     cubesCount: 50,
+    debug: false,
   });
 
   const cubesRef =
@@ -108,7 +109,7 @@ export const GyroscopeExperience = () => {
   return (
     <>
       <Text fontSize={0.3} color="darkblue">
-        {gravity.toString()}
+        {debug && gravity.toString()}
       </Text>
       <OrbitControls
         makeDefault
@@ -122,7 +123,7 @@ export const GyroscopeExperience = () => {
         shadow-mapSize={2048}
       />
       <ambientLight intensity={0.5} />
-      <Physics debug gravity={gravity}>
+      <Physics debug={debug} gravity={gravity}>
         <RigidBody
           type="fixed"
           restitution={0}
