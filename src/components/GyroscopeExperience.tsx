@@ -10,14 +10,18 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { debounce } from "lodash-es";
 import * as THREE from "three";
 
-const cubesCount = 50;
-const gravityMultiplier = 90;
+import { useControls } from "leva";
 
 const defaultGravity: [number, number, number] = [0, -9.81, 0];
 const radians = (deg: number) => (deg * Math.PI) / 180;
 
 export const GyroscopeExperience = () => {
   const [gravity, setGravity] = useState(defaultGravity);
+  const { gravityMultiplier, cubesCount, debug } = useControls({
+    gravityMultiplier: 9,
+    cubesCount: 50,
+    debug: false,
+  });
 
   const cubesRef =
     useRef<
@@ -35,15 +39,14 @@ export const GyroscopeExperience = () => {
       matrix.compose(
         new THREE.Vector3(i * 2, 0, 0),
         new THREE.Quaternion(),
-        new THREE.Vector3(1, 1, 1),
+        new THREE.Vector3(1, 1, 1)
       );
       cubesRef.current.setMatrixAt(i, matrix);
     }
-  }, []);
+  }, [cubesCount]);
 
   const handleDeviceOrientationChange = useCallback(
     debounce((e: DeviceOrientationEvent) => {
-      console.log({ e, now: Date.now() });
       const beta = e.beta || 0;
       const gamma = e.gamma || 0;
 
@@ -60,18 +63,24 @@ export const GyroscopeExperience = () => {
         -gz * gravityMultiplier,
       ]);
     }, 20),
-    [],
+    []
   );
 
   useEffect(() => {
     if ("DeviceOrientationEvent" in window) {
       window.addEventListener(
         "deviceorientation",
-        handleDeviceOrientationChange,
+        handleDeviceOrientationChange
       );
     } else {
       console.log("Device Orientation API not supported.");
     }
+
+    return () =>
+      window.removeEventListener(
+        "deviceorientation",
+        handleDeviceOrientationChange
+      );
   });
 
   const instances = useMemo(() => {
@@ -79,7 +88,7 @@ export const GyroscopeExperience = () => {
 
     for (let i = 0; i < cubesCount; i++) {
       const instance = {
-        key: `instance_${i}`,
+        key: `instance_${Date()}-${i}`,
         position: [
           (Math.random() - 0.5) * 8,
           6 + i * 0.2,
@@ -95,12 +104,12 @@ export const GyroscopeExperience = () => {
     }
 
     return instances;
-  }, []);
+  }, [cubesCount]);
 
   return (
     <>
       <Text fontSize={0.3} color="darkblue">
-        {gravity.toString()}
+        {debug && gravity.toString()}
       </Text>
       <OrbitControls
         makeDefault
@@ -114,7 +123,7 @@ export const GyroscopeExperience = () => {
         shadow-mapSize={2048}
       />
       <ambientLight intensity={0.5} />
-      <Physics debug gravity={gravity}>
+      <Physics debug={debug} gravity={gravity}>
         <RigidBody
           type="fixed"
           restitution={0}
